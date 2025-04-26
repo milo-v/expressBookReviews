@@ -4,7 +4,6 @@ let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
 
-
 public_users.post("/register", (req,res) => {
   //Write your code here
   const { username, password } = req.body;
@@ -17,35 +16,39 @@ public_users.post("/register", (req,res) => {
 });
 
 // Get the book list available in the shop
-public_users.get('/',function (req, res) {
+public_users.get('/',async function (req, res) {
   //Write your code here
-  return res.status(300).json(books);
+  await new Promise(resolve => setTimeout(resolve, 5000));
+  res.status(200).json(books);
 });
 
 // Get book details based on ISBN
-public_users.get('/isbn/:isbn',function (req, res) {
+public_users.get('/isbn/:isbn',async function (req, res) {
   //Write your code here
   const isbn = req.params['isbn'];
-  return res.status(300).json(books[isbn]);
+  await new Promise(resolve => setTimeout(resolve, 5000));
+  return res.status(200).json(books[isbn]);
  });
   
 // Get book details based on author
-public_users.get('/author/:author',function (req, res) {
+public_users.get('/author/:author',async function (req, res) {
   //Write your code here
   const author = req.params['author'];
   const results = Object.fromEntries(
     Object.entries(books).filter(([key, book]) => book.author === author)
   )
-  return res.status(300).json(results);
+  await new Promise(resolve => setTimeout(resolve, 5000));
+  return res.status(200).json(results);
 });
 
 // Get all books based on title
-public_users.get('/title/:title',function (req, res) {
+public_users.get('/title/:title',async function (req, res) {
   //Write your code here
   const title = req.params['title'];
   const results = Object.fromEntries(
     Object.entries(books).filter(([key, book]) => book.title === title)
   )
+  await new Promise(resolve => setTimeout(resolve, 5000));
   return res.status(300).json(results);
 });
 
